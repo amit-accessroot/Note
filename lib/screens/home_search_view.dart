@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../data/local_repository.dart';
 
-/// मुख्य होम स्क्रीन विजेट जो नोट्स की लिस्ट दिखाता है
 class RootHomeScreen extends StatefulWidget {
   final LocalRepository repository;
   final VoidCallback onAddNotePressed;
@@ -70,12 +69,12 @@ class _RootHomeScreenState extends State<RootHomeScreen> {
                   ),
                 )
               : ListView.builder(
-                  padding: const Size.fromHeight(16).height == 16 ? const EdgeInsets.all(16) : EdgeInsets.zero,
+                  padding: const EdgeInsets.all(16),
                   itemCount: _notes.length,
                   itemBuilder: (context, index) {
                     final note = _notes[index];
                     return Container(
-                      margin: const EdgeInsets.bottom(12),
+                      margin: const EdgeInsets.only(bottom: 12), // यहाँ एरर फिक्स कर दिया गया है
                       decoration: BoxDecoration(
                         color: const Color(0xFFF9F9F9),
                         borderRadius: BorderRadius.circular(8),
@@ -108,7 +107,6 @@ class _RootHomeScreenState extends State<RootHomeScreen> {
   }
 }
 
-/// एडवांस्ड कीवर्ड सर्च इंजन स्क्रीन विजेट
 class SearchScreen extends StatefulWidget {
   final LocalRepository repository;
 
@@ -206,25 +204,28 @@ class _SearchScreenState extends State<SearchScreen> {
                   itemCount: _searchResults.length,
                   itemBuilder: (context, index) {
                     final note = _searchResults[index];
-                    return Card(
-                      color: Colors.white,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        side: const BorderSide(color: Color(0xFFE0E0E0), width: 0.5),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      margin: const EdgeInsets.bottom(10),
-                      child: ListTile(
-                        title: Text(
-                          note.title,
-                          style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF1E1E1E)),
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 10), // यहाँ एरर फिक्स कर दिया गया है
+                      child: Card(
+                        color: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          side: const BorderSide(color: Color(0xFFE0E0E0), width: 0.5),
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        subtitle: Text(
-                          note.content,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                        margin: EdgeInsets.zero,
+                        child: ListTile(
+                          title: Text(
+                            note.title,
+                            style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF1E1E1E)),
+                          ),
+                          subtitle: Text(
+                            note.content,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          leading: const Icon(Icons.description, color: Color(0xFF1E1E1E)),
                         ),
-                        leading: const Icon(Icons.description, color: Color(0xFF1E1E1E)),
                       ),
                     );
                   },
