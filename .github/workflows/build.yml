@@ -1,0 +1,44 @@
+name: Flutter Build APK
+
+# यह बिल्ड तब चालू होगा जब आप मेन ब्रांच में कोई कोड पुश (Commit) करेंगे
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: # इससे आप खुद भी बटन दबाकर बिल्ड चालू कर सकते हैं
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. गिटहब से आपका कोड निकालना
+    - uses: actions/checkout@v4
+
+    # 2. जावा एनवायरनमेंट सेटअप करना (एंड्रॉइड के लिए जरूरी)
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    # 3. फ्लटर एनवायरनमेंट सेटअप करना
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.19.x' # जो फ्लटर वर्जन आप यूज़ करना चाहें
+        channel: 'stable'
+
+    # 4. ऐप की डिपेंडेंसीज डाउनलोड करना
+    - name: Install dependencies
+      run: flutter pub get
+
+    # 5. प्रोडक्शन-रेडी रिलीज APK बिल्ड करना
+    - name: Build APK
+      run: flutter build apk --release
+
+    # 6. बने हुए APK को डाउनलोड के लिए उपलब्ध कराना
+    - name: Upload APK Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Note-App-Release-APK
+        path: build/app/outputs/flutter-apk/app-release.apk
