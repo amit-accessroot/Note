@@ -18,13 +18,12 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    # यहाँ हमने फ्लटर का सबसे लेटेस्ट वर्जन सेट कर दिया है ताकि पॉप स्कोप एरर न आए
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.19.x'
         channel: 'stable'
 
-    # यहाँ हमने प्रोजेक्ट का नाम छोटे अक्षरों में (note) फिक्स कर दिया है
     - name: Repair and Recreate Android Project Files
       run: flutter create --org com.andrpid --project-name=note .
 
