@@ -18,14 +18,37 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    # यहाँ हमने फ्लटर का सबसे लेटेस्ट वर्जन सेट कर दिया है ताकि पॉप स्कोप एरर न आए
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
         channel: 'stable'
 
+    # 1. प्रोजेक्ट फाइल्स को री-क्रिएट करना
     - name: Repair and Recreate Android Project Files
       run: flutter create --org com.andrpid --project-name=note .
+
+    # 2. 🚨 जादू यहाँ है: एंड्रॉइड को आदेश देना कि हमेशा लाइट (व्हाइट) थीम ही लोड करे, चाहे फोन डार्क मोड में हो
+    - name: Force Pure White Theme and Full Screen Settings
+      run: |
+        cat <<EOT > android/app/src/main/res/values/styles.xml
+        <?xml version="1.0" encoding="utf-8"?>
+        <resources>
+            <style name="LaunchTheme" parent="Theme.AppCompat.Light.NoActionBar">
+                <item name="android:windowBackground">@drawable/launch_background</item>
+                <item name="android:navigationBarColor">#FFFFFF</item>
+                <item name="android:windowLightNavigationBar">true</item>
+                <item name="android:statusBarColor">#FFFFFF</item>
+                <item name="android:windowLightStatusBar">true</item>
+            </style>
+            <style name="NormalTheme" parent="Theme.AppCompat.Light.NoActionBar">
+                <item name="android:windowBackground">?android:colorBackground</item>
+                <item name="android:navigationBarColor">#FFFFFF</item>
+                <item name="android:windowLightNavigationBar">true</item>
+                <item name="android:statusBarColor">#FFFFFF</item>
+                <item name="android:windowLightStatusBar">true</item>
+            </style>
+        </resources>
+        EOT
 
     - name: Install dependencies
       run: flutter pub get
