@@ -24,9 +24,9 @@ jobs:
         flutter-version: '3.19.x'
         channel: 'stable'
 
-    # यह कमांड मिसिंग एंड्रॉइड और मैनिफेस्ट फाइलों को ऑटोमैटिकली बना देगी
+    # यहाँ हमने प्रोजेक्ट का नाम छोटे अक्षरों में (note) फिक्स कर दिया है
     - name: Repair and Recreate Android Project Files
-      run: flutter create --org com.andrpid .
+      run: flutter create --org com.andrpid --project-name=note .
 
     - name: Install dependencies
       run: flutter pub get
