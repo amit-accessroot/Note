@@ -5,15 +5,17 @@ import 'screens/home_search_view.dart';
 import 'screens/note_editor_view.dart';
 import 'services/cloud_sync_service.dart';
 
-void main() {
+void main() async {
+  // इनिशियलाइजेशन को पक्का करना ताकि डेटाबेस सही से काम करे
   WidgetsFlutterBinding.ensureInitialized();
   
+  // सिस्टम स्टेटस बार और नेविगेशन बार (बॉटम बैक बटन पट्टी) को प्योर व्हाइट और आइकन्स को डार्क करना
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.white,
     statusBarIconBrightness: Brightness.dark,
     statusBarBrightness: Brightness.light,
-    systemNavigationBarColor: Colors.white,
-    systemNavigationBarIconBrightness: Brightness.dark,
+    systemNavigationBarColor: Colors.white, // बॉटम पट्टी का रंग प्योर व्हाइट
+    systemNavigationBarIconBrightness: Brightness.dark, // बैक बटन का रंग डार्क
     systemNavigationBarDividerColor: Colors.transparent,
   ));
 
@@ -212,7 +214,7 @@ class FolderDirectoryView extends StatelessWidget {
             itemBuilder: (context, index) {
               final folder = folders[index];
               return Container(
-                margin: const EdgeInsets.only(bottom: 12), // यहाँ एरर फिक्स कर दिया गया है
+                margin: const EdgeInsets.only(bottom: 12),
                 decoration: BoxDecoration(
                   color: const Color(0xFFF9F9F9),
                   borderRadius: BorderRadius.circular(8),
