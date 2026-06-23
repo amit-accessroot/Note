@@ -27,20 +27,20 @@ jobs:
     - name: Repair and Recreate Android Project Files
       run: flutter create --org com.andrpid --project-name=note .
 
-    # 2. 🚨 जादू यहाँ है: एंड्रॉइड को आदेश देना कि हमेशा लाइट (व्हाइट) थीम ही लोड करे, चाहे फोन डार्क मोड में हो
-    - name: Force Pure White Theme and Full Screen Settings
+    # 2. 🚨 सही थीम (Theme.Material3) के साथ प्योर व्हाइट मोड को फोर्स करना
+    - name: Force Pure White Theme with Correct Material3 Theme
       run: |
         cat <<EOT > android/app/src/main/res/values/styles.xml
         <?xml version="1.0" encoding="utf-8"?>
         <resources>
-            <style name="LaunchTheme" parent="Theme.AppCompat.Light.NoActionBar">
+            <style name="LaunchTheme" parent="Theme.Material3.DayNight.NoActionBar">
                 <item name="android:windowBackground">@drawable/launch_background</item>
                 <item name="android:navigationBarColor">#FFFFFF</item>
                 <item name="android:windowLightNavigationBar">true</item>
                 <item name="android:statusBarColor">#FFFFFF</item>
                 <item name="android:windowLightStatusBar">true</item>
             </style>
-            <style name="NormalTheme" parent="Theme.AppCompat.Light.NoActionBar">
+            <style name="NormalTheme" parent="Theme.Material3.DayNight.NoActionBar">
                 <item name="android:windowBackground">?android:colorBackground</item>
                 <item name="android:navigationBarColor">#FFFFFF</item>
                 <item name="android:windowLightNavigationBar">true</item>
@@ -61,3 +61,4 @@ jobs:
       with:
         name: Note-App-Release-APK
         path: build/app/outputs/flutter-apk/app-release.apk
+
